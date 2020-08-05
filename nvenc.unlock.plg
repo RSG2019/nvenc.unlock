@@ -1,0 +1,56 @@
+<?xml version='1.0' standalone='yes'?>
+<!DOCTYPE PLUGIN [
+<!ENTITY title      "N卡解锁插件">
+<!ENTITY name      "nvenc.unlock">
+<!ENTITY author    "RSG-人生观">
+<!ENTITY version   "2020.08.05">
+<!ENTITY md5       "a0e55a483d14151aaf9fda3135666c63">
+<!ENTITY pluginURL "https://download.unraid.info:2018/plugins/&name;/&name;.plg">
+]>
+
+<PLUGIN name="&title;" author="&author;" version="&version;" pluginURL="&pluginURL;" min="6.6.6" support="https://www.lxg2016.com/" icon="users">
+
+<CHANGES>
+###2020.08.04
+测试版本
+
+</CHANGES>
+<FILE Run="/bin/bash">
+<INLINE>
+mkdir -p /boot/config/plugins/&name;
+</INLINE>
+</FILE>
+
+<!--
+The 'source' file.
+-->
+<FILE Name="/boot/config/plugins/&name;/&name;-&version;.txz" Run="upgradepkg --install-new --reinstall">
+<URL>https://download.unraid.info:2018/plugins/&name;-&version;.txz</URL>
+<MD5>&md5;</MD5>
+</FILE>
+
+<!--
+The 'post-install' script
+-->
+<FILE Run="/bin/bash">
+<INLINE>
+echo ""
+echo "----------------------------------------------------"
+echo " &name; has been installed."
+echo " Copyright 2015-2020, RSG-人生观"
+echo " Version: &version;"
+echo "----------------------------------------------------"
+echo ""
+</INLINE>
+</FILE>
+
+<!--
+The 'remove' script.
+-->
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+removepkg &name;-&version;
+rm -rf /boot/config/plugins/&name;
+</INLINE>
+</FILE> 
+</PLUGIN>
